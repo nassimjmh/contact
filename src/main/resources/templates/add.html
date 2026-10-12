@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajouter un contact</title>
+
+</head>
+<body>
+    <nav class="navbar">
+        <a th:href="@{/}" href="/">Accueil</a>
+        <a th:href="@{/contacts}" href="/contacts">Liste des contacts</a>
+        <a th:href="@{/ajout}" href="/ajout">Ajouter un contact</a>
+        <a th:href="@{/delete}" href="/delete">Supprimer un contact</a>
+    </nav>
+
+    <div class="container">
+        <h1>Ajouter un contact</h1>
+        <form th:action="@{/save}" action="/save" method="post">
+            <div class="form-group">
+                <label for="nom">Nom :</label>
+                <input type="text" id="nom" name="nom" placeholder="Entrez le nom" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email :</label>
+                <input type="email" id="email" name="email" placeholder="Entrez l'adresse email" required>
+            </div>
+            <div class="form-group">
+                <label for="note">Note :</label>
+                <input type="number" id="note" name="note" placeholder="Entrez une note (entier)" required>
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="btn-submit">Enregistrer</button>
+                <a th:href="@{/contacts}" href="/contacts" class="btn-cancel">Annuler</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

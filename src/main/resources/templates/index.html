@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accueil - Gestion des Contacts</title>
+
+</head>
+<body>
+    <nav class="navbar">
+        <a th:href="@{/}" href="/">Accueil</a>
+        <a th:href="@{/contacts}" href="/contacts">Liste des contacts</a>
+        <a th:href="@{/ajout}" href="/ajout">Ajouter un contact</a>
+        <a th:href="@{/delete}" href="/delete">Supprimer un contact</a>
+    </nav>
+
+    <div class="container">
+        <h1>Page d'accueil - Gestion des contacts</h1>
+        <p>Bienvenue sur votre gestionnaire de contacts. Utilisez la barre de navigation ou les raccourcis ci-dessous pour gérer vos contacts :</p>
+
+        <div class="card-grid">
+            <div class="card">
+                <h3>Consulter les contacts</h3>
+                <p>Visualisez la liste complète de vos contacts et leurs informations.</p>
+                <a th:href="@{/contacts}" href="/contacts" class="btn">Voir la liste</a>
+            </div>
+            <div class="card">
+                <h3>Ajouter un contact</h3>
+                <p>Enregistrez un nouveau contact avec son nom, son email et une note.</p>
+                <a th:href="@{/ajout}" href="/ajout" class="btn btn-success">Ajouter</a>
+            </div>
+            <div class="card">
+                <h3>Supprimer un contact</h3>
+                <p>Supprimez un contact par son identifiant numérique (ID).</p>
+                <a th:href="@{/delete}" href="/delete" class="btn btn-danger">Supprimer</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
