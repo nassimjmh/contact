@@ -4,31 +4,52 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ajouter un contact</title>
-
 </head>
 <body>
     <nav class="navbar">
-        <a th:href="@{/}" href="/">Accueil</a>
-        <a th:href="@{/contacts}" href="/contacts">Liste des contacts</a>
-        <a th:href="@{/ajout}" href="/ajout">Ajouter un contact</a>
-        <a th:href="@{/delete}" href="/delete">Supprimer un contact</a>
+        <a th:href="@{/}" href="/">Accueil</a> |
+        <a th:href="@{/contacts}" href="/contacts">Liste des contacts</a> |
+        <a th:href="@{/ajout}" href="/ajout">Ajouter un contact</a> |
+        <a th:href="@{/delete}" href="/delete">Supprimer un contact</a> |
+        <a th:href="@{/contacts/recherche}" href="/contacts/recherche">Rechercher contacts</a> |
+        <a th:href="@{/contacts/proprietaire}" href="/contacts/proprietaire">Trouver propriétaire</a> |
+        <a th:href="@{/personnes}" href="/personnes">Liste des personnes</a> |
+        <a th:href="@{/personnes/ajout}" href="/personnes/ajout">Ajouter une personne</a> |
+        <a th:href="@{/personnes/sans-contact}" href="/personnes/sans-contact">Personnes sans contact</a> |
+        <a th:href="@{/personnes/meilleure-moyenne}" href="/personnes/meilleure-moyenne">Meilleure moyenne</a>
     </nav>
 
     <div class="container">
         <h1>Ajouter un contact</h1>
+
+        <div th:if="${errorMessage != null}" style="color: red; font-weight: bold;">
+            <p th:text="${errorMessage}">Message d'erreur</p>
+        </div>
+
         <form th:action="@{/save}" action="/save" method="post">
             <div class="form-group">
-                <label for="nom">Nom :</label>
-                <input type="text" id="nom" name="nom" placeholder="Entrez le nom" required>
+                <label for="email">Email (unique) :</label><br>
+                <input type="email" id="email" name="email" th:value="${email}" placeholder="Entrez l'adresse email" required>
             </div>
+            <br>
             <div class="form-group">
-                <label for="email">Email :</label>
-                <input type="email" id="email" name="email" placeholder="Entrez l'adresse email" required>
+                <label for="note">Note :</label><br>
+                <input type="number" id="note" name="note" th:value="${note}" placeholder="Entrez une note (ex: 15)" required>
             </div>
+            <br>
             <div class="form-group">
-                <label for="note">Note :</label>
-                <input type="number" id="note" name="note" placeholder="Entrez une note (entier)" required>
+                <label for="personId">Personne propriétaire :</label><br>
+                <select id="personId" name="personId">
+                    <option value="">-- Aucune personne associée --</option>
+                    <option th:each="pers : ${personnes}"
+                            th:value="${pers.id}"
+                            th:selected="${selectedPersonId != null and selectedPersonId == pers.id}"
+                            th:text="${pers.nom + ' ' + pers.prenom + ' (ID: ' + pers.id + ')'}">
+                        Dupont Jean
+                    </option>
+                </select>
             </div>
+            <br>
             <div class="form-actions">
                 <button type="submit" class="btn-submit">Enregistrer</button>
                 <a th:href="@{/contacts}" href="/contacts" class="btn-cancel">Annuler</a>

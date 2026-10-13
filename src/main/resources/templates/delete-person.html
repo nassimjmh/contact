@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supprimer une personne</title>
+</head>
+<body>
+    <nav class="navbar">
+        <a th:href="@{/}" href="/">Accueil</a> |
+        <a th:href="@{/contacts}" href="/contacts">Liste des contacts</a> |
+        <a th:href="@{/ajout}" href="/ajout">Ajouter un contact</a> |
+        <a th:href="@{/delete}" href="/delete">Supprimer un contact</a> |
+        <a th:href="@{/contacts/recherche}" href="/contacts/recherche">Rechercher contacts</a> |
+        <a th:href="@{/contacts/proprietaire}" href="/contacts/proprietaire">Trouver propriétaire</a> |
+        <a th:href="@{/personnes}" href="/personnes">Liste des personnes</a> |
+        <a th:href="@{/personnes/ajout}" href="/personnes/ajout">Ajouter une personne</a> |
+        <a th:href="@{/personnes/sans-contact}" href="/personnes/sans-contact">Personnes sans contact</a> |
+        <a th:href="@{/personnes/meilleure-moyenne}" href="/personnes/meilleure-moyenne">Meilleure moyenne</a>
+    </nav>
+
+    <div class="container">
+        <h1>Supprimer une personne</h1>
+
+        <div th:if="${message != null}">
+            <p th:text="${message}">Message de confirmation</p>
+        </div>
+        <div th:if="${errorMessage != null}">
+            <p th:text="${errorMessage}">Message d'erreur</p>
+        </div>
+
+        <div class="info-message">
+            <p>Saisissez l'ID de la personne à supprimer, ou consultez la <a th:href="@{/personnes}" href="/personnes">liste des personnes</a> pour supprimer directement depuis le tableau.</p>
+        </div>
+
+        <form th:action="@{/personnes/deleteSave}" action="/personnes/deleteSave" method="post">
+            <div class="form-group">
+                <label for="id">Identifiant (ID) de la personne :</label><br>
+                <input type="number" id="id" name="id" placeholder="Entrez l'ID de la personne" required>
+            </div>
+            <br>
+            <div class="form-actions">
+                <button type="submit" class="btn-delete" onclick="return confirm('Confirmer la suppression de cette personne et de ses contacts ?');">Supprimer</button>
+                <a th:href="@{/personnes}" href="/personnes" class="btn-cancel">Retour à la liste</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

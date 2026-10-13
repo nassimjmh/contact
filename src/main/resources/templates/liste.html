@@ -4,29 +4,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Liste des contacts</title>
-
 </head>
 <body>
     <nav class="navbar">
-        <a th:href="@{/}" href="/">Accueil</a>
-        <a th:href="@{/contacts}" href="/contacts">Liste des contacts</a>
-        <a th:href="@{/ajout}" href="/ajout">Ajouter un contact</a>
-        <a th:href="@{/delete}" href="/delete">Supprimer un contact</a>
+        <a th:href="@{/}" href="/">Accueil</a> |
+        <a th:href="@{/contacts}" href="/contacts">Liste des contacts</a> |
+        <a th:href="@{/ajout}" href="/ajout">Ajouter un contact</a> |
+        <a th:href="@{/delete}" href="/delete">Supprimer un contact</a> |
+        <a th:href="@{/contacts/recherche}" href="/contacts/recherche">Rechercher contacts</a> |
+        <a th:href="@{/contacts/proprietaire}" href="/contacts/proprietaire">Trouver propriétaire</a> |
+        <a th:href="@{/personnes}" href="/personnes">Liste des personnes</a> |
+        <a th:href="@{/personnes/ajout}" href="/personnes/ajout">Ajouter une personne</a> |
+        <a th:href="@{/personnes/sans-contact}" href="/personnes/sans-contact">Personnes sans contact</a> |
+        <a th:href="@{/personnes/meilleure-moyenne}" href="/personnes/meilleure-moyenne">Meilleure moyenne</a>
     </nav>
 
     <div class="container">
         <div class="header-section">
             <h1>Liste des contacts</h1>
-            <a th:href="@{/ajout}" href="/ajout" class="btn">+ Ajouter un contact</a>
+            <p>
+                <a th:href="@{/ajout}" href="/ajout" class="btn">+ Ajouter un contact</a> |
+                <a th:href="@{/contacts/recherche}" href="/contacts/recherche" class="btn">Rechercher des contacts</a>
+            </p>
         </div>
 
-        <table>
+        <table border="1">
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Nom</th>
                     <th>Email</th>
                     <th>Note</th>
+                    <th>Personne Propriétaire</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -36,12 +44,23 @@
                 </tr>
                 <tr th:each="contact : ${contacts}">
                     <td th:text="${contact.id}">1</td>
-                    <td th:text="${contact.nom}">Nom</td>
                     <td th:text="${contact.email}">email@example.com</td>
                     <td th:text="${contact.note}">10</td>
                     <td>
+                        <span th:if="${contact.person != null}">
+                            <a th:href="@{/contacts/proprietaire(contactId=${contact.id})}"
+                               th:text="${contact.person.nom + ' ' + contact.person.prenom}">Jean Dupont</a>
+                        </span>
+                        <span th:if="${contact.person == null}">Aucune</span>
+                    </td>
+                    <td>
+                        <a th:href="@{/contacts/edit(id=${contact.id})}">Modifier</a>
+                        |
+                        <a th:href="@{/contacts/proprietaire(contactId=${contact.id})}">Propriétaire</a>
+                        |
                         <form th:action="@{/deleteSave}" action="/deleteSave" method="post" style="display:inline;">
                             <input type="hidden" name="id" th:value="${contact.id}" />
+                            <input type="hidden" name="redirectUrl" value="contacts" />
                             <button type="submit" class="btn-delete" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce contact ?');">Supprimer</button>
                         </form>
                     </td>

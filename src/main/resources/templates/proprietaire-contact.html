@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Propriétaire d'un contact</title>
+</head>
+<body>
+    <nav class="navbar">
+        <a th:href="@{/}" href="/">Accueil</a> |
+        <a th:href="@{/contacts}" href="/contacts">Liste des contacts</a> |
+        <a th:href="@{/ajout}" href="/ajout">Ajouter un contact</a> |
+        <a th:href="@{/delete}" href="/delete">Supprimer un contact</a> |
+        <a th:href="@{/contacts/recherche}" href="/contacts/recherche">Rechercher contacts</a> |
+        <a th:href="@{/contacts/proprietaire}" href="/contacts/proprietaire">Trouver propriétaire</a> |
+        <a th:href="@{/personnes}" href="/personnes">Liste des personnes</a> |
+        <a th:href="@{/personnes/ajout}" href="/personnes/ajout">Ajouter une personne</a> |
+        <a th:href="@{/personnes/sans-contact}" href="/personnes/sans-contact">Personnes sans contact</a> |
+        <a th:href="@{/personnes/meilleure-moyenne}" href="/personnes/meilleure-moyenne">Meilleure moyenne</a>
+    </nav>
+
+    <div class="container">
+        <h1>Rechercher le propriétaire d'un contact</h1>
+
+        <h2>Recherche par ID de contact</h2>
+        <form th:action="@{/contacts/proprietaire}" method="get">
+            <div class="form-group">
+                <label for="contactId">Identifiant (ID) du contact :</label><br>
+                <input type="number" id="contactId" name="contactId" th:value="${rechercheId}" placeholder="Ex: 1">
+                <button type="submit">Rechercher par ID</button>
+            </div>
+        </form>
+
+        <br>
+
+        <h2>Ou recherche par adresse Email</h2>
+        <form th:action="@{/contacts/proprietaire}" method="get">
+            <div class="form-group">
+                <label for="email">Adresse email du contact :</label><br>
+                <input type="email" id="email" name="email" th:value="${rechercheEmail}" placeholder="Ex: jean@example.com">
+                <button type="submit">Rechercher par Email</button>
+            </div>
+        </form>
+
+        <br>
+        <hr>
+
+        <div th:if="${introuvable}">
+            <p style="color: red;"><strong>Aucun contact correspondant n'a été trouvé dans la base de données.</strong></p>
+        </div>
+
+        <div th:if="${contact != null}">
+            <h2>Détails du contact</h2>
+            <p><strong>ID :</strong> <span th:text="${contact.id}">1</span></p>
+            <p><strong>Email :</strong> <span th:text="${contact.email}">email@example.com</span></p>
+            <p><strong>Note :</strong> <span th:text="${contact.note}">15</span></p>
+
+            <hr>
+
+            <h2>Informations de la personne propriétaire</h2>
+
+            <div th:if="${proprietaire != null}">
+                <p><strong>Identifiant de la personne (ID) :</strong> <span th:text="${proprietaire.id}">1</span></p>
+                <p><strong>Nom :</strong> <span th:text="${proprietaire.nom}">Dupont</span></p>
+                <p><strong>Prénom :</strong> <span th:text="${proprietaire.prenom}">Jean</span></p>
+                <p><strong>Adresse :</strong> <span th:text="${proprietaire.adresse}">12 rue de la Paix</span></p>
+
+                <h3>Tous les contacts de cette personne :</h3>
+                <table border="1">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Email</th>
+                            <th>Note</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="c : ${autresContacts}">
+                            <td th:text="${c.id}">1</td>
+                            <td th:text="${c.email}">email@example.com</td>
+                            <td th:text="${c.note}">15</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div th:if="${proprietaire == null}">
+                <p><em>Ce contact n'est actuellement rattaché à aucune personne.</em></p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

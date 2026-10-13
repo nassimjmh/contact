@@ -4,26 +4,41 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Supprimer un contact</title>
-
 </head>
 <body>
     <nav class="navbar">
-        <a th:href="@{/}" href="/">Accueil</a>
-        <a th:href="@{/contacts}" href="/contacts">Liste des contacts</a>
-        <a th:href="@{/ajout}" href="/ajout">Ajouter un contact</a>
-        <a th:href="@{/delete}" href="/delete">Supprimer un contact</a>
+        <a th:href="@{/}" href="/">Accueil</a> |
+        <a th:href="@{/contacts}" href="/contacts">Liste des contacts</a> |
+        <a th:href="@{/ajout}" href="/ajout">Ajouter un contact</a> |
+        <a th:href="@{/delete}" href="/delete">Supprimer un contact</a> |
+        <a th:href="@{/contacts/recherche}" href="/contacts/recherche">Rechercher contacts</a> |
+        <a th:href="@{/contacts/proprietaire}" href="/contacts/proprietaire">Trouver propriétaire</a> |
+        <a th:href="@{/personnes}" href="/personnes">Liste des personnes</a> |
+        <a th:href="@{/personnes/ajout}" href="/personnes/ajout">Ajouter une personne</a> |
+        <a th:href="@{/personnes/sans-contact}" href="/personnes/sans-contact">Personnes sans contact</a> |
+        <a th:href="@{/personnes/meilleure-moyenne}" href="/personnes/meilleure-moyenne">Meilleure moyenne</a>
     </nav>
 
     <div class="container">
         <h1>Supprimer un contact</h1>
-        <div class="info-message">
-            Saisissez l'ID du contact à supprimer, ou consultez la <a th:href="@{/contacts}" href="/contacts">liste des contacts</a> pour supprimer directement depuis le tableau.
+
+        <div th:if="${message != null}">
+            <p th:text="${message}">Message de confirmation</p>
         </div>
+        <div th:if="${errorMessage != null}">
+            <p th:text="${errorMessage}">Message d'erreur</p>
+        </div>
+
+        <div class="info-message">
+            <p>Saisissez l'ID du contact à supprimer, ou consultez la <a th:href="@{/contacts}" href="/contacts">liste des contacts</a> pour supprimer directement depuis le tableau.</p>
+        </div>
+
         <form th:action="@{/deleteSave}" action="/deleteSave" method="post">
             <div class="form-group">
-                <label for="id">Identifiant (ID) du contact :</label>
+                <label for="id">Identifiant (ID) du contact :</label><br>
                 <input type="number" id="id" name="id" placeholder="Entrez l'ID du contact" required>
             </div>
+            <br>
             <div class="form-actions">
                 <button type="submit" class="btn-delete" onclick="return confirm('Confirmer la suppression de ce contact ?');">Supprimer</button>
                 <a th:href="@{/contacts}" href="/contacts" class="btn-cancel">Retour à la liste</a>

@@ -1,8 +1,12 @@
 package zip.nassim.contact.entities;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 import java.io.Serializable;
 
@@ -12,14 +16,47 @@ public class Contact implements Serializable {
     @GeneratedValue
     private Long id;
 
-    @Override
-    public String toString() {
-        return "Contacts [id=" + id + ", nom=" + nom + ", email=" + email + "]";
+    @Column(unique = true, nullable = false)
+    private String email;
+
+    private int note;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "person_id")
+    private Person person;
+
+    public Contact() {
+        super();
     }
 
-    private String nom;
-    private String email;
-    private int note;
+    public Contact(String email, int note) {
+        super();
+        this.email = email;
+        this.note = note;
+    }
+
+    public Contact(String email, int note, Person person) {
+        super();
+        this.email = email;
+        this.note = note;
+        this.person = person;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     public int getNote() {
         return note;
@@ -29,34 +66,16 @@ public class Contact implements Serializable {
         this.note = note;
     }
 
-    public Contact() {
-        super();
+    public Person getPerson() {
+        return person;
     }
 
-    public Contact(String nom, String email, int note) {
-        super();
-        this.nom = nom;
-        this.email = email;
-        this.note = note;
+    public void setPerson(Person person) {
+        this.person = person;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public String getNom() {
-        return nom;
-    }
-
-    public void setNom(String nom) {
-        this.nom = nom;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
+    @Override
+    public String toString() {
+        return "Contact [id=" + id + ", note=" + note + ", email=" + email + "]";
     }
 }

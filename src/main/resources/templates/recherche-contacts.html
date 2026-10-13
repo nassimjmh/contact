@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recherche de contacts</title>
+</head>
+<body>
+    <nav class="navbar">
+        <a th:href="@{/}" href="/">Accueil</a> |
+        <a th:href="@{/contacts}" href="/contacts">Liste des contacts</a> |
+        <a th:href="@{/ajout}" href="/ajout">Ajouter un contact</a> |
+        <a th:href="@{/delete}" href="/delete">Supprimer un contact</a> |
+        <a th:href="@{/contacts/recherche}" href="/contacts/recherche">Rechercher contacts</a> |
+        <a th:href="@{/contacts/proprietaire}" href="/contacts/proprietaire">Trouver propriétaire</a> |
+        <a th:href="@{/personnes}" href="/personnes">Liste des personnes</a> |
+        <a th:href="@{/personnes/ajout}" href="/personnes/ajout">Ajouter une personne</a> |
+        <a th:href="@{/personnes/sans-contact}" href="/personnes/sans-contact">Personnes sans contact</a> |
+        <a th:href="@{/personnes/meilleure-moyenne}" href="/personnes/meilleure-moyenne">Meilleure moyenne</a>
+    </nav>
+
+    <div class="container">
+        <h1>Recherche de contacts</h1>
+
+        <h2>1. Recherche par note spécifique</h2>
+        <form th:action="@{/contacts/recherche}" method="get">
+            <input type="hidden" name="type" value="specifique">
+            <div class="form-group">
+                <label for="note">Note exacte recherchée :</label><br>
+                <input type="number" id="note" name="note" th:value="${searchNote}" placeholder="Ex: 15" required>
+                <button type="submit">Rechercher par note</button>
+            </div>
+        </form>
+
+        <br>
+        <hr>
+
+        <h2>2. Recherche de contacts mal notés</h2>
+        <form th:action="@{/contacts/recherche}" method="get">
+            <input type="hidden" name="type" value="mal-notes">
+            <div class="form-group">
+                <label for="seuil">Note maximale (strictement inférieure à ce seuil, par défaut 10) :</label><br>
+                <input type="number" id="seuil" name="seuil" th:value="${searchSeuil != null ? searchSeuil : 10}" placeholder="10" required>
+                <button type="submit">Afficher les contacts mal notés</button>
+            </div>
+        </form>
+
+        <br>
+        <hr>
+
+        <div th:if="${resultats != null}">
+            <h2>Résultats de la recherche</h2>
+            <p><strong>Critère :</strong> <span th:text="${critere}">Résultats</span></p>
+
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Email</th>
+                        <th>Note</th>
+                        <th>Propriétaire</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:if="${#lists.isEmpty(resultats)}">
+                        <td colspan="5">Aucun contact trouvé pour cette recherche.</td>
+                    </tr>
+                    <tr th:each="contact : ${resultats}">
+                        <td th:text="${contact.id}">1</td>
+                        <td th:text="${contact.email}">email@example.com</td>
+                        <td th:text="${contact.note}">5</td>
+                        <td>
+                            <span th:if="${contact.person != null}">
+                                <a th:href="@{/contacts/proprietaire(contactId=${contact.id})}"
+                                   th:text="${contact.person.nom + ' ' + contact.person.prenom}">Jean Dupont</a>
+                            </span>
+                            <span th:if="${contact.person == null}">Aucun</span>
+                        </td>
+                        <td>
+                            <a th:href="@{/contacts/edit(id=${contact.id})}">Modifier</a>
+                            |
+                            <a th:href="@{/contacts/proprietaire(contactId=${contact.id})}">Propriétaire</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

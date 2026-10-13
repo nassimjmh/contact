@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modifier un contact</title>
+</head>
+<body>
+    <nav class="navbar">
+        <a th:href="@{/}" href="/">Accueil</a> |
+        <a th:href="@{/contacts}" href="/contacts">Liste des contacts</a> |
+        <a th:href="@{/ajout}" href="/ajout">Ajouter un contact</a> |
+        <a th:href="@{/delete}" href="/delete">Supprimer un contact</a> |
+        <a th:href="@{/contacts/recherche}" href="/contacts/recherche">Rechercher contacts</a> |
+        <a th:href="@{/contacts/proprietaire}" href="/contacts/proprietaire">Trouver propriétaire</a> |
+        <a th:href="@{/personnes}" href="/personnes">Liste des personnes</a> |
+        <a th:href="@{/personnes/ajout}" href="/personnes/ajout">Ajouter une personne</a> |
+        <a th:href="@{/personnes/sans-contact}" href="/personnes/sans-contact">Personnes sans contact</a> |
+        <a th:href="@{/personnes/meilleure-moyenne}" href="/personnes/meilleure-moyenne">Meilleure moyenne</a>
+    </nav>
+
+    <div class="container">
+        <h1>Modifier le contact</h1>
+
+        <div th:if="${errorMessage != null}">
+            <p th:text="${errorMessage}">Message d'erreur</p>
+        </div>
+
+        <form th:action="@{/contacts/update}" action="/contacts/update" method="post">
+            <input type="hidden" name="id" th:value="${contact.id}">
+
+            <p><strong>ID du contact :</strong> <span th:text="${contact.id}">1</span></p>
+
+            <div class="form-group">
+                <label for="email">Email (unique) :</label><br>
+                <input type="email" id="email" name="email" th:value="${contact.email}" required>
+            </div>
+            <br>
+            <div class="form-group">
+                <label for="note">Note :</label><br>
+                <input type="number" id="note" name="note" th:value="${contact.note}" required>
+            </div>
+            <br>
+            <div class="form-group">
+                <label for="personId">Personne propriétaire :</label><br>
+                <select id="personId" name="personId">
+                    <option value="">-- Aucune personne associée --</option>
+                    <option th:each="pers : ${personnes}"
+                            th:value="${pers.id}"
+                            th:selected="${contact.person != null and contact.person.id == pers.id}"
+                            th:text="${pers.nom + ' ' + pers.prenom + ' (ID: ' + pers.id + ')'}">
+                        Dupont Jean
+                    </option>
+                </select>
+            </div>
+            <br>
+            <div class="form-actions">
+                <button type="submit" class="btn-submit">Mettre à jour</button>
+                <a th:href="@{/contacts}" href="/contacts" class="btn-cancel">Annuler</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

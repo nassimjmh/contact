@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personne ayant la meilleure moyenne des notes</title>
+</head>
+<body>
+    <nav class="navbar">
+        <a th:href="@{/}" href="/">Accueil</a> |
+        <a th:href="@{/contacts}" href="/contacts">Liste des contacts</a> |
+        <a th:href="@{/ajout}" href="/ajout">Ajouter un contact</a> |
+        <a th:href="@{/delete}" href="/delete">Supprimer un contact</a> |
+        <a th:href="@{/contacts/recherche}" href="/contacts/recherche">Rechercher contacts</a> |
+        <a th:href="@{/contacts/proprietaire}" href="/contacts/proprietaire">Trouver propriétaire</a> |
+        <a th:href="@{/personnes}" href="/personnes">Liste des personnes</a> |
+        <a th:href="@{/personnes/ajout}" href="/personnes/ajout">Ajouter une personne</a> |
+        <a th:href="@{/personnes/sans-contact}" href="/personnes/sans-contact">Personnes sans contact</a> |
+        <a th:href="@{/personnes/meilleure-moyenne}" href="/personnes/meilleure-moyenne">Meilleure moyenne</a>
+    </nav>
+
+    <div class="container">
+        <h1>Personne ayant la moyenne des notes de ses contacts la plus élevée</h1>
+
+        <div th:if="${best == null}">
+            <p><em>Aucune personne ne possède de contacts actuellement. Veuillez d'abord ajouter des personnes et leur associer des contacts.</em></p>
+        </div>
+
+        <div th:if="${best != null}">
+            <h2>Personne n°1 (Moyenne la plus élevée)</h2>
+            <p><strong>Identifiant (ID) :</strong> <span th:text="${best.person.id}">1</span></p>
+            <p><strong>Nom :</strong> <span th:text="${best.person.nom}">Dupont</span></p>
+            <p><strong>Prénom :</strong> <span th:text="${best.person.prenom}">Jean</span></p>
+            <p><strong>Adresse :</strong> <span th:text="${best.person.adresse}">12 rue de la Paix</span></p>
+            <p><strong>Moyenne des notes :</strong> <span th:text="${best.formattedAverage}">18.50</span> / 20</p>
+            <p><strong>Nombre de contacts :</strong> <span th:text="${best.contactCount}">3</span></p>
+
+            <h3>Détail des contacts de cette personne :</h3>
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Email</th>
+                        <th>Note</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="c : ${bestContacts}">
+                        <td th:text="${c.id}">1</td>
+                        <td th:text="${c.email}">email@example.com</td>
+                        <td th:text="${c.note}">20</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <br>
+            <hr>
+
+            <h2>Classement de toutes les personnes par moyenne des notes</h2>
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>Rang</th>
+                        <th>Personne</th>
+                        <th>Nombre de contacts</th>
+                        <th>Moyenne des notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="stat, iterStat : ${statsList}">
+                        <td th:text="${iterStat.count}">1</td>
+                        <td th:text="${stat.person.nom + ' ' + stat.person.prenom + ' (ID: ' + stat.person.id + ')'}">Dupont Jean</td>
+                        <td th:text="${stat.contactCount}">2</td>
+                        <td><strong th:text="${stat.formattedAverage}">16.50</strong> / 20</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

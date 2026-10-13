@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personnes ne possédant aucun contact</title>
+</head>
+<body>
+    <nav class="navbar">
+        <a th:href="@{/}" href="/">Accueil</a> |
+        <a th:href="@{/contacts}" href="/contacts">Liste des contacts</a> |
+        <a th:href="@{/ajout}" href="/ajout">Ajouter un contact</a> |
+        <a th:href="@{/delete}" href="/delete">Supprimer un contact</a> |
+        <a th:href="@{/contacts/recherche}" href="/contacts/recherche">Rechercher contacts</a> |
+        <a th:href="@{/contacts/proprietaire}" href="/contacts/proprietaire">Trouver propriétaire</a> |
+        <a th:href="@{/personnes}" href="/personnes">Liste des personnes</a> |
+        <a th:href="@{/personnes/ajout}" href="/personnes/ajout">Ajouter une personne</a> |
+        <a th:href="@{/personnes/sans-contact}" href="/personnes/sans-contact">Personnes sans contact</a> |
+        <a th:href="@{/personnes/meilleure-moyenne}" href="/personnes/meilleure-moyenne">Meilleure moyenne</a>
+    </nav>
+
+    <div class="container">
+        <h1>Personnes ne possédant aucun contact</h1>
+        <p>Cette page liste l'ensemble des personnes enregistrées dans la base qui n'ont actuellement aucun contact rattaché.</p>
+
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nom</th>
+                    <th>Prénom</th>
+                    <th>Adresse</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:if="${personnes == null or #lists.isEmpty(personnes)}">
+                    <td colspan="5">Toutes les personnes enregistrées possèdent au moins un contact (ou aucune personne n'est enregistrée).</td>
+                </tr>
+                <tr th:each="pers : ${personnes}">
+                    <td th:text="${pers.id}">1</td>
+                    <td th:text="${pers.nom}">Dupont</td>
+                    <td th:text="${pers.prenom}">Jean</td>
+                    <td th:text="${pers.adresse}">10 rue de Paris</td>
+                    <td>
+                        <a th:href="@{/personnes/edit(id=${pers.id})}">Modifier</a>
+                        |
+                        <a th:href="@{/ajout(selectedPersonId=${pers.id})}">+ Ajouter un contact pour cette personne</a>
+                        |
+                        <form th:action="@{/personnes/deleteSave}" action="/personnes/deleteSave" method="post" style="display:inline;">
+                            <input type="hidden" name="id" th:value="${pers.id}" />
+                            <input type="hidden" name="redirectUrl" value="personnes" />
+                            <button type="submit" onclick="return confirm('Confirmer la suppression de cette personne ?');">Supprimer</button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

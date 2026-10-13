@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modifier une personne</title>
+</head>
+<body>
+    <nav class="navbar">
+        <a th:href="@{/}" href="/">Accueil</a> |
+        <a th:href="@{/contacts}" href="/contacts">Liste des contacts</a> |
+        <a th:href="@{/ajout}" href="/ajout">Ajouter un contact</a> |
+        <a th:href="@{/delete}" href="/delete">Supprimer un contact</a> |
+        <a th:href="@{/contacts/recherche}" href="/contacts/recherche">Rechercher contacts</a> |
+        <a th:href="@{/contacts/proprietaire}" href="/contacts/proprietaire">Trouver propriétaire</a> |
+        <a th:href="@{/personnes}" href="/personnes">Liste des personnes</a> |
+        <a th:href="@{/personnes/ajout}" href="/personnes/ajout">Ajouter une personne</a> |
+        <a th:href="@{/personnes/sans-contact}" href="/personnes/sans-contact">Personnes sans contact</a> |
+        <a th:href="@{/personnes/meilleure-moyenne}" href="/personnes/meilleure-moyenne">Meilleure moyenne</a>
+    </nav>
+
+    <div class="container">
+        <h1>Modifier la personne</h1>
+
+        <form th:action="@{/personnes/update}" action="/personnes/update" method="post">
+            <input type="hidden" name="id" th:value="${personne.id}">
+
+            <p><strong>ID :</strong> <span th:text="${personne.id}">1</span></p>
+
+            <div class="form-group">
+                <label for="nom">Nom :</label><br>
+                <input type="text" id="nom" name="nom" th:value="${personne.nom}" required>
+            </div>
+            <br>
+            <div class="form-group">
+                <label for="prenom">Prénom :</label><br>
+                <input type="text" id="prenom" name="prenom" th:value="${personne.prenom}" required>
+            </div>
+            <br>
+            <div class="form-group">
+                <label for="adresse">Adresse :</label><br>
+                <input type="text" id="adresse" name="adresse" th:value="${personne.adresse}" required>
+            </div>
+            <br>
+            <div class="form-actions">
+                <button type="submit" class="btn-submit">Mettre à jour</button>
+                <a th:href="@{/personnes}" href="/personnes" class="btn-cancel">Annuler</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
