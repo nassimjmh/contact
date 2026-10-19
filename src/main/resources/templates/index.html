@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Accueil - Gestion des Contacts et Personnes</title>
+    <title>Accueil</title>
 </head>
 <body>
     <nav class="navbar">
@@ -20,29 +20,23 @@
     </nav>
 
     <div class="container">
-        <h1>Page d'accueil - Gestion des contacts et des personnes</h1>
-        <p>Bienvenue sur votre gestionnaire de contacts et de personnes.</p>
-
+        <h1>Page d'accueil</h1>
         <h2>Gestion des Contacts</h2>
         <div class="card-grid">
             <div class="card">
                 <h3>Consulter les contacts</h3>
-                <p>Visualisez la liste complète de vos contacts, leurs notes et la personne associée.</p>
                 <a th:href="@{/contacts}" href="/contacts" class="btn">Voir la liste</a>
             </div>
             <div class="card">
                 <h3>Ajouter un contact</h3>
-                <p>Enregistrez un nouveau contact avec son email unique, une note et son propriétaire éventuel.</p>
                 <a th:href="@{/ajout}" href="/ajout" class="btn btn-success">Ajouter un contact</a>
             </div>
             <div class="card">
-                <h3>Supprimer un contact</h3>
-                <p>Supprimez un contact par son identifiant numérique (ID).</p>
+                <h3>Supprimer un contact avec son ID</h3>
                 <a th:href="@{/delete}" href="/delete" class="btn btn-danger">Supprimer un contact</a>
             </div>
             <div class="card">
                 <h3>Rechercher des contacts</h3>
-                <p>Recherchez des contacts par note spécifique ou trouvez les contacts mal notés (&lt; 10).</p>
                 <a th:href="@{/contacts/recherche}" href="/contacts/recherche" class="btn">Rechercher</a>
             </div>
             <div class="card">
@@ -56,22 +50,18 @@
         <div class="card-grid">
             <div class="card">
                 <h3>Consulter les personnes</h3>
-                <p>Visualisez l'ensemble des personnes, leurs coordonnées et leurs contacts associés.</p>
                 <a th:href="@{/personnes}" href="/personnes" class="btn">Voir les personnes</a>
             </div>
             <div class="card">
                 <h3>Ajouter une personne</h3>
-                <p>Enregistrez une nouvelle personne avec son nom, prénom et adresse.</p>
                 <a th:href="@{/personnes/ajout}" href="/personnes/ajout" class="btn btn-success">Ajouter une personne</a>
             </div>
             <div class="card">
                 <h3>Personnes sans contact</h3>
-                <p>Identifiez rapidement toutes les personnes ne possédant aucun contact.</p>
                 <a th:href="@{/personnes/sans-contact}" href="/personnes/sans-contact" class="btn">Voir les personnes sans contact</a>
             </div>
             <div class="card">
                 <h3>Meilleure moyenne</h3>
-                <p>Découvrez la personne dont les contacts ont la moyenne des notes la plus élevée.</p>
                 <a th:href="@{/personnes/meilleure-moyenne}" href="/personnes/meilleure-moyenne" class="btn">Voir le classement</a>
             </div>
         </div>

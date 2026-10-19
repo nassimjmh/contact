@@ -29,9 +29,6 @@
             <p th:text="${errorMessage}">Message d'erreur</p>
         </div>
 
-        <div class="info-message">
-            <p>Saisissez l'ID du contact à supprimer, ou consultez la <a th:href="@{/contacts}" href="/contacts">liste des contacts</a> pour supprimer directement depuis le tableau.</p>
-        </div>
 
         <form th:action="@{/deleteSave}" action="/deleteSave" method="post">
             <div class="form-group">
@@ -41,7 +38,6 @@
             <br>
             <div class="form-actions">
                 <button type="submit" class="btn-delete" onclick="return confirm('Confirmer la suppression de ce contact ?');">Supprimer</button>
-                <a th:href="@{/contacts}" href="/contacts" class="btn-cancel">Retour à la liste</a>
             </div>
         </form>
     </div>

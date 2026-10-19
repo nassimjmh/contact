@@ -27,17 +27,13 @@ public class Ctr {
     @Autowired
     private PersonRepository personRepository;
 
-    // ==========================================
-    // PAGE D'ACCUEIL
-    // ==========================================
+
     @RequestMapping("/")
     public String home() {
         return "index";
     }
 
-    // ==========================================
-    // GESTION DES CONTACTS
-    // ==========================================
+
     @RequestMapping("/contacts")
     public String contacts(Model model) {
         List<Contact> contacts = contactRepository.findAll();
@@ -53,11 +49,7 @@ public class Ctr {
     }
 
     @PostMapping("/save")
-    public String save(@RequestParam String email,
-                       @RequestParam int note,
-                       @RequestParam(required = false) Long personId,
-                       Model model) {
-        // Vérification de l'unicité de l'email
+    public String save(@RequestParam String email, @RequestParam int note, @RequestParam(required = false) Long personId, Model model) {
         if (contactRepository.existsByEmail(email)) {
             model.addAttribute("errorMessage", "Erreur : Un contact avec l'adresse email '" + email + "' existe déjà !");
             model.addAttribute("personnes", personRepository.findAll());
@@ -100,7 +92,6 @@ public class Ctr {
 
         Contact contact = contactOpt.get();
 
-        // Vérifier si l'email a changé et s'il est déjà pris par un autre contact
         if (!contact.getEmail().equalsIgnoreCase(email)) {
             Optional<Contact> existing = contactRepository.findByEmail(email);
             if (existing.isPresent() && !existing.get().getId().equals(id)) {
@@ -154,9 +145,7 @@ public class Ctr {
         return "redirect:/contacts";
     }
 
-    // ==========================================
-    // RECHERCHE DE CONTACTS (MAL NOTES / NOTE SPECIFIQUE)
-    // ==========================================
+
     @GetMapping("/contacts/recherche")
     public String rechercheContacts(@RequestParam(required = false) String type,
                                     @RequestParam(required = false) Integer note,
@@ -182,9 +171,7 @@ public class Ctr {
         return "recherche-contacts";
     }
 
-    // ==========================================
-    // PROPRIETAIRE D'UN CONTACT DONNE
-    // ==========================================
+
     @GetMapping("/contacts/proprietaire")
     public String afficherProprietaire(@RequestParam(required = false) Long contactId,
                                        @RequestParam(required = false) String email,
@@ -214,9 +201,7 @@ public class Ctr {
         return "proprietaire-contact";
     }
 
-    // ==========================================
-    // GESTION DES PERSONNES
-    // ==========================================
+
     @GetMapping("/personnes")
     public String listePersonnes(Model model) {
         List<Person> personnes = personRepository.findAllWithContacts();
@@ -293,9 +278,7 @@ public class Ctr {
         return "redirect:/personnes";
     }
 
-    // ==========================================
-    // RECHERCHE DES PERSONNES SANS CONTACT
-    // ==========================================
+
     @GetMapping("/personnes/sans-contact")
     public String personnesSansContact(Model model) {
         List<Person> sansContact = personRepository.findPersonsWithNoContacts();
@@ -303,9 +286,6 @@ public class Ctr {
         return "personnes-sans-contact";
     }
 
-    // ==========================================
-    // PERSONNE AVEC LA MOYENNE LA PLUS ELEVEE
-    // ==========================================
     @GetMapping("/personnes/meilleure-moyenne")
     public String meilleureMoyenne(Model model) {
         List<Person> personnes = personRepository.findAllWithContacts();
@@ -333,7 +313,6 @@ public class Ctr {
         return "meilleure-moyenne";
     }
 
-    // Classe DTO pour les statistiques de moyennes
     public static class PersonStats {
         private final Person person;
         private final double averageNote;
