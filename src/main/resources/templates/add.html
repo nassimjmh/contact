@@ -34,7 +34,7 @@
             <br>
             <div class="form-group">
                 <label for="note">Note :</label><br>
-                <input type="number" id="note" name="note" th:value="${note}" placeholder="Entrez une note (ex: 15)" required>
+                <input type="number" id="note" name="note" min="0" max="20" th:value="${note}" placeholder="Entrez une note (ex: 15)" required>
             </div>
             <br>
             <div class="form-group">

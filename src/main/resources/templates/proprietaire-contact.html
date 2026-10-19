@@ -44,7 +44,7 @@
         <hr>
 
         <div th:if="${introuvable}">
-            <p style="color: red;"><strong>Aucun contact correspondant n'a été trouvé dans la base de données.</strong></p>
+            <p><strong>Aucun contact correspondant n'a été trouvé dans la base de données.</strong></p>
         </div>
 
         <div th:if="${contact != null}">
@@ -55,7 +55,7 @@
 
             <hr>
 
-            <h2>Informations de la personne propriétaire</h2>
+            <h2>Propriétaire</h2>
 
             <div th:if="${proprietaire != null}">
                 <p><strong>Identifiant de la personne (ID) :</strong> <span th:text="${proprietaire.id}">1</span></p>

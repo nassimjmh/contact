@@ -38,7 +38,7 @@
             <br>
             <div class="form-group">
                 <label for="note">Note :</label><br>
-                <input type="number" id="note" name="note" th:value="${contact.note}" required>
+                <input type="number" id="note" name="note" min="0" max="20x²" th:value="${contact.note}" required>
             </div>
             <br>
             <div class="form-group">

@@ -21,8 +21,6 @@
 
     <div class="container">
         <h1>Recherche de contacts</h1>
-
-        <h2>1. Recherche par note spécifique</h2>
         <form th:action="@{/contacts/recherche}" method="get">
             <input type="hidden" name="type" value="specifique">
             <div class="form-group">
@@ -32,10 +30,7 @@
             </div>
         </form>
 
-        <br>
-        <hr>
 
-        <h2>2. Recherche de contacts mal notés</h2>
         <form th:action="@{/contacts/recherche}" method="get">
             <input type="hidden" name="type" value="mal-notes">
             <div class="form-group">
@@ -45,8 +40,6 @@
             </div>
         </form>
 
-        <br>
-        <hr>
 
         <div th:if="${resultats != null}">
             <h2>Résultats de la recherche</h2>
