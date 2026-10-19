@@ -13,7 +13,6 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
     @Query("SELECT p FROM Person p WHERE p.contacts IS EMPTY")
     List<Person> findPersonsWithNoContacts();
 
-    List<Person> findByContactsIsEmpty();
 
     @Query("SELECT DISTINCT p FROM Person p LEFT JOIN FETCH p.contacts")
     List<Person> findAllWithContacts();
